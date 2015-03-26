@@ -1,0 +1,25 @@
+<template>
+  <section if.bind="resource" class="au-animate">
+      <div repeat.for="prop of resource.props()">
+        ${prop.name}: ${prop.value}
+      </div>
+      <hr />
+      <ul>
+        <li repeat.for="group of resource.links()">
+          ${group.rel}
+          <ul>
+            <li repeat.for="link of group.links">
+              <a href="#${link.href}">${link.href}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div repeat.for="group of resource.embeds()">
+        <h3>${group.name}</h3>
+          <compose repeat.for="embed of group.embeds" view-model="./node" model.bind="embed"></compose>
+        </div>
+        <hr />
+      </div>
+  </section>
+</template>

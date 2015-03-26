@@ -1,0 +1,19 @@
+{
+    "name": "dockeliver/api",
+    "authors": [
+        {
+            "name": "Klein Florian",
+            "email": "florian.klein@free.fr"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "App": "src/" }
+    },
+    "require": {
+        "silex/silex": "^1.3",
+        "igorw/event-source": "^1.0",
+        "elasticsearch/elasticsearch": "^2.0",
+        "league/oauth2-github": "^0.2.0",
+        "knplabs/github-api": "^1.5"
+    }
+}

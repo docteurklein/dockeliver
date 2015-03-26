@@ -1,0 +1,34 @@
+<html>
+  <head></head>
+  <body>
+    <h1>{{ repo }}</h1>
+    <h3>dockeliver</h3>
+    <p>
+      Hi!
+      <br>
+      Commit <a href="{{ commit_url }}">{{ commit }}</a> has been deployed.
+      <br>
+      <br>
+      Here are the published services:
+      <br>
+      <ul>
+        {% for name, url in urls %}
+        <li><a href="http://{{ url }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+      <br>
+      Enjoy!
+      <br>
+      <br>
+      PS: here are the first logs:
+      {% for name, log in logs %}
+      <h4><a href="http://api.{{ host }}/{{ repo }}@{{ commit }}/logs/{{ name }}">{{ name }}</a></h4>
+        <pre>
+        <code>
+            {{ log }}
+        </code>
+        </pre>
+      {% endfor %}
+    </p>
+  </body>
+</html>

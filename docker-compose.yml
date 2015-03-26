@@ -1,0 +1,98 @@
+builds:
+    image: busybox
+    volumes:
+        - /builds
+
+rabbitmq:
+    restart: always
+    build: rabbitmq
+    hostname: rabbitmq
+    ports:
+        - 15672:15672
+        - 5672:5672
+
+front:
+    restart: always
+    build: front
+    volumes:
+        - ./front:/usr/src/app
+
+api:
+    restart: always
+    build: api
+    volumes:
+        - ./api:/code
+    links:
+        - elk
+    env_file: env
+
+hook:
+    restart: always
+    build: hook
+    links:
+        - rabbitmq
+
+host:
+    restart: always
+    build: host
+    entrypoint: [amqp-consume]
+    command: -s rabbitmq:5672 -q host bash create.sh
+    links:
+        - rabbitmq
+
+download:
+    restart: always
+    build: download
+    entrypoint: [amqp-consume]
+    command: -s rabbitmq:5672 -q download bash download.sh
+    volumes_from:
+        - builds
+    links:
+        - rabbitmq
+
+run:
+    restart: always
+    command: python run.py
+    build: run
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    volumes_from:
+        - builds
+    links:
+        - rabbitmq
+    env_file: env
+
+expose:
+    restart: always
+    build: expose
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+        - '80:80'
+    links:
+        - api
+        - hook
+
+notify:
+    restart: always
+    command: python worker.py
+    build: notify
+    links:
+        - rabbitmq
+    env_file: env
+
+elk:
+    restart: always
+    build: elk
+    ports:
+        - "9000:80"
+
+logspout:
+    restart: always
+    image: organizeme/logspout-logstash
+    links:
+        - elk
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    environment:
+        ROUTE_URIS: logstash://elk:5000

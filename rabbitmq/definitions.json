@@ -1,0 +1,156 @@
+{
+  "rabbit_version": "3.5.3",
+  "users": [
+    {
+      "name": "guest",
+      "password_hash": "ziMMJbaBfmjj3qCK+UkXO7icVdQ=",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "\/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "\/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [
+    
+  ],
+  "policies": [
+    
+  ],
+  "queues": [
+    {
+      "name": "host",
+      "vhost": "\/",
+      "durable": false,
+      "auto_delete": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "download",
+      "vhost": "\/",
+      "durable": false,
+      "auto_delete": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "run",
+      "vhost": "\/",
+      "durable": false,
+      "auto_delete": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "notify",
+      "vhost": "\/",
+      "durable": false,
+      "auto_delete": false,
+      "arguments": {
+        
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "hook",
+      "vhost": "\/",
+      "type": "fanout",
+      "durable": false,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "host",
+      "vhost": "\/",
+      "type": "fanout",
+      "durable": false,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "download",
+      "vhost": "\/",
+      "type": "fanout",
+      "durable": false,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {
+        
+      }
+    },
+    {
+      "name": "run",
+      "vhost": "\/",
+      "type": "fanout",
+      "durable": false,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {
+        
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "source": "hook",
+      "vhost": "\/",
+      "destination": "host",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        
+      }
+    },
+    {
+      "source": "host",
+      "vhost": "\/",
+      "destination": "download",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        
+      }
+    },
+    {
+      "source": "download",
+      "vhost": "\/",
+      "destination": "run",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        
+      }
+    },
+    {
+      "source": "run",
+      "vhost": "\/",
+      "destination": "notify",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        
+      }
+    }
+  ]
+}

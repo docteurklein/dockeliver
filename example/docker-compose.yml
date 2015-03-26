@@ -1,0 +1,11 @@
+
+web:
+    build: .
+    command: python app.py
+    ports:
+        - '80:5000'
+    links:
+        - redis
+
+redis:
+    image: redis
